@@ -75,6 +75,7 @@ abstract class Base
         add_action('wp_head', [$this, 'action_theme_style']);
         add_action('admin_head', [$this, 'action_theme_style']);
         add_action('wp_enqueue_scripts', [$this, 'action_enqueue_scripts']);
+        add_action('enqueue_block_editor_assets', [$this, 'action_enqueue_scripts']);
 
         /* Filters */
         add_filter('template_include', [$this, 'filter_template_include']);
