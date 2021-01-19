@@ -48,6 +48,11 @@ class Model extends Module
     {
         return apply_filters('sp_theme_block_margin', '2rem');
     }
+    
+    public function get_text_margin()
+    {
+        return apply_filters('sp_theme_text_margin', '1rem');
+    }
 
     public function get_block_category_name()
     {
