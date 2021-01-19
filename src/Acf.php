@@ -110,7 +110,11 @@ class Acf extends Module
                     'title' => $block->name,
                     'render_callback' => array($block, 'render_block'),
                     'category' => 'sitepilot-block',
-                    'icon' => $block->icon
+                    'icon' => $block->icon,
+                    'supports' => [
+                        'align' => array('full', 'wide'),
+                        'align_text' => true
+                    ]
                 ]);
             }
 
