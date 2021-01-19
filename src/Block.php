@@ -162,6 +162,10 @@ abstract class Block
             $data['class'] .= ' align' . $block['align'];
         }
 
+        if (!empty($block['align_text'])) {
+            $data['class'] .= ' has-text-align-' . $block['align_text'];
+        }
+
         echo $this->render($data);
     }
 
