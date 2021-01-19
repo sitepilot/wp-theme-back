@@ -14,4 +14,5 @@
 .sp-block.mb-x { margin-bottom: var(--sp-block-margin); }
 .sp-block.mb-0 { margin-bottom: 0; }
 .sp-block .not-found { padding: 1rem; border: 1px dashed gray; }
+.wp-block-columns { margin-top: var(--sp-block-margin; margin-bottom: var(--sp-block-margin); }
 @if($theme->model->is_blocks_layout() && $theme->astra->is_active())#primary, .hentry { margin: 0 !important; }@endif
