@@ -71,22 +71,20 @@ abstract class Base
         define('SITEPILOT_THEME_URL', trailingslashit(get_stylesheet_directory_uri()));
         define('SITEPILOT_THEME_FILE', SITEPILOT_THEME_DIR . 'functions.php');
 
-        /* Actions */
-        add_action('wp_head', [$this, 'action_theme_style']);
-        add_action('admin_head', [$this, 'action_theme_style']);
-        add_action('wp_enqueue_scripts', [$this, 'action_enqueue_scripts']);
-        add_action('enqueue_block_editor_assets', [$this, 'action_enqueue_scripts']);
-
-        /* Filters */
-        add_filter('template_include', [$this, 'filter_template_include']);
-        add_filter('sp_update_list', [$this, 'filter_update_list']);
-
         /* Modules */
         $this->acf = new Acf($this);
         $this->astra = new Astra($this);
         $this->model = new Model($this);
         $this->blocks = new Blocks($this);
         $this->builder = new Builder($this);
+        $this->template = new Template($this);
+
+        /* Actions */
+        add_action('wp_enqueue_scripts', [$this, 'action_enqueue_scripts']);
+        add_action('enqueue_block_editor_assets', [$this, 'action_enqueue_scripts']);
+
+        /* Filters */
+        add_filter('sp_update_list', [$this, 'filter_update_list']);
     }
 
     /**
@@ -94,7 +92,10 @@ abstract class Base
      * 
      * @return void
      */
-    abstract function action_enqueue_scripts();
+    public function action_enqueue_scripts()
+    {
+        wp_register_script('font-awesome-5', 'https://kit.fontawesome.com/ec90000d1a.js');
+    }
 
     /**
      * Register theme to the Sitepilot updater.
@@ -127,56 +128,10 @@ abstract class Base
     /**
      * Add theme colors to WordPress head.
      *
-     * @return void
+     * @return string
      */
-    public function action_theme_style(): void
+    public function get_theme_css(): string
     {
-        echo self::blade()->make('style', ['theme' => $this])->render();
-    }
-
-    /**
-     * Filter template path.
-     *
-     * @param string $template
-     * @return void
-     */
-    public function filter_template_include($template): string
-    {
-        if (self::get_template_post_id()) {
-            return __DIR__ . '/../templates/template.php';
-        }
-
-        return $template;
-    }
-
-    /**
-     * Get the template ID.
-     *
-     * @return int
-     */
-    public static function get_template_post_id(): int
-    {
-        if (is_404()) {
-            $id = apply_filters('sp_theme_template_id_404', null);
-            if ($id) {
-                return $id;
-            }
-        }
-
-        if (is_search()) {
-            $id = apply_filters('sp_theme_template_id_search', null);
-            if ($id) {
-                return $id;
-            }
-        }
-
-        foreach (get_post_types() as $type) {
-            $id = apply_filters("sp_theme_template_id_{$type}_archive", null);
-            if (($type == 'post' && is_home() || is_post_type_archive($type)) && $id) {
-                return $id;
-            }
-        }
-
-        return 0;
+        return self::blade()->make('theme-css', ['theme' => $this])->render();
     }
 }

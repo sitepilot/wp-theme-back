@@ -4,6 +4,11 @@ namespace Sitepilot\Theme;
 
 class Model extends Module
 {
+    public function get_theme_version()
+    {
+        return strpos(SITEPILOT_THEME_VERSION, '-dev') !== false ? time() : SITEPILOT_THEME_VERSION;
+    }
+
     public function get_layout()
     {
         return apply_filters('sp_theme_layout', null);
@@ -49,8 +54,13 @@ class Model extends Module
         return apply_filters('sp_theme_block_category', 'Sitepilot');
     }
 
+    public function get_container_width()
+    {
+        return apply_filters('sp_theme_container_width', null);
+    }
+
     public function get_tablet_breakpoint()
     {
-        return apply_filters('sp_theme_tablet_breakpoint', 992);
+        return apply_filters('sp_theme_tablet_breakpoint', null);
     }
 }

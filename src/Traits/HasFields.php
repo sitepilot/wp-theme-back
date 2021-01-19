@@ -5,6 +5,7 @@ namespace Sitepilot\Theme\Traits;
 use Sitepilot\Theme\Block;
 use Sitepilot\Theme\Fields\Post;
 use Sitepilot\Theme\Fields\Text;
+use Sitepilot\Theme\Fields\Color;
 use Sitepilot\Theme\Fields\Image;
 use Sitepilot\Theme\Fields\Editor;
 use Sitepilot\Theme\Fields\Number;
@@ -29,6 +30,17 @@ trait HasFields
         } else {
             return 'theme';
         }
+    }
+
+    static public function get_field($key, $post_id = null, $default = null)
+    {
+        $value = null;
+
+        if (function_exists('get_field')) {
+            $value = get_field($key, $post_id);
+        }
+
+        return $value ? $value : $default;
     }
 
     public function field_image($name, $attribute)
@@ -84,5 +96,10 @@ trait HasFields
     public function field_block_margin($name, $attribute)
     {
         return BlockMargin::make($name, $attribute, $this->field_namespace());
+    }
+
+    public function field_color($name, $attribute)
+    {
+        return Color::make($name, $attribute, $this->field_namespace());
     }
 }

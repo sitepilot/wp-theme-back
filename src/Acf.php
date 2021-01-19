@@ -39,9 +39,9 @@ class Acf extends Module
         if (count($this->theme->fields())) {
             if (function_exists('acf_add_options_page')) {
                 $this->options_page = acf_add_options_page(array(
-                    'page_title' => __('Theme Options', 'sitepilot-theme'),
-                    'menu_title' => __('Theme', 'sitepilot-theme'),
-                    'menu_slug' => 'sitepilot-theme',
+                    'page_title' => __('Theme Options', 'sp-theme'),
+                    'menu_title' => __('Theme', 'sp-theme'),
+                    'menu_slug' => 'sp-theme',
                     'capability' => 'edit_posts',
                     'redirect' => false,
                     'parent_slug' => 'sitepilot-menu',
@@ -57,14 +57,14 @@ class Acf extends Module
 
                 acf_add_local_field_group(array(
                     'key' => 'group_theme',
-                    'title' => __('Theme Options', 'sitepilot-theme'),
+                    'title' => __('Theme Options', 'sp-theme'),
                     'fields' => $fields,
                     'location' => array(
                         array(
                             array(
                                 'param' => 'options_page',
                                 'operator' => '==',
-                                'value' => 'sitepilot-theme',
+                                'value' => 'sp-theme',
                             ),
                         ),
                     )
@@ -80,7 +80,7 @@ class Acf extends Module
      * @param mixed $default
      * @return void
      */
-    static public function get_field($key, $default = null): mixed
+    static public function get_field($key, $default = null)
     {
         $value = null;
 

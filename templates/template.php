@@ -1,6 +1,6 @@
 <?php
 
-use Sitepilot\Theme\Theme;
+use Sitepilot\Theme\Template;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -8,8 +8,12 @@ if (!defined('ABSPATH')) {
 
 get_header();
 
-$page = get_post(Theme::get_template_post_id());
+$page = get_post(Template::get_template_id());
+?>
 
-echo apply_filters('the_content', $page->post_content);
+<div class="<?php echo apply_filters('sp_theme_template_class', 'entry-content') ?>">
+    <?php echo apply_filters('the_content', $page->post_content); ?>
+</div>
 
+<?php
 get_footer();

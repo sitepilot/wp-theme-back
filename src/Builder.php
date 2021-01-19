@@ -27,8 +27,8 @@ class Builder extends Module
             return;
         }
 
-        if(get_post_meta(get_the_ID(), '_fl_builder_enabled', true) || isset($_GET['fl_builder'])) {
-            add_filter('sp_theme_layout', function(){
+        if (get_post_meta(get_the_ID(), '_fl_builder_enabled', true) || isset($_GET['fl_builder'])) {
+            add_filter('sp_theme_layout', function () {
                 return 'builder';
             });
         }

@@ -21,10 +21,10 @@ class BlockMargin extends Field
             'required' => $this->required,
             'default_value' => $this->default,
             'choices' => [
-                'none' => __('None', 'sitepilot-theme'),
-                'top' => __('Top', 'sitepilot-block'),
-                'bottom' => __('Bottom', 'sitepilot-block'),
-                'top-bottom' => __('Top & Bottom', 'sitepilot-block'),
+                'top' => __('Top', 'sp-theme'),
+                'bottom' => __('Bottom', 'sp-theme'),
+                'top-bottom' => __('Top & Bottom', 'sp-theme'),
+                'none' => __('None', 'sp-theme')
             ]
         ];
     }

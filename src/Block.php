@@ -149,6 +149,7 @@ abstract class Block
         }
 
         $data = $this->data(array_merge([
+            'post_id' => $post_id,
             'block' => $this,
             'class' => 'sp-block ' . $this->class
         ], $field_data), $post_id);
@@ -180,6 +181,7 @@ abstract class Block
         }
 
         $data = $this->data(array_merge([
+            'post_id' => get_the_ID(),
             'block' => $this,
             'class' => 'sp-block sp-shortcode ' . $this->class,
         ], $field_data, ['slot' => $slot ? $slot : '']), get_the_ID());
@@ -204,9 +206,9 @@ abstract class Block
             $data['exception'] = $e->getMessage();
         }
 
-        if (empty(trim($view)) && current_user_can('edit_others_pages')) {
+        if (empty(trim($view)) && is_admin()) {
             if (empty($data['exception'])) {
-                $data['exception'] = "No preview available for this block.";
+                $data['exception'] = "";
             }
             return $blade->make('block-404', $data)->render();
         } else {
@@ -222,7 +224,7 @@ abstract class Block
     public function filter_view_data($data): array
     {
         if (isset($data['margin'])) {
-            switch ($data['margin']) {
+            switch ($data['margin']) {    
                 case 'none':
                     $data['margin'] = "mt-0 mb-0";
                     break;
