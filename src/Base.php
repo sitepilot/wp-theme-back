@@ -85,6 +85,9 @@ abstract class Base
 
         /* Filters */
         add_filter('sp_update_list', [$this, 'filter_update_list']);
+
+        /* Translation */
+        load_theme_textdomain('sp-theme', __DIR__ . '/../lang');
     }
 
     /**

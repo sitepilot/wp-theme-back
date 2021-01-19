@@ -1,0 +1,88 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sitepilot Theme\n"
+"POT-Creation-Date: 2021-01-19 08:18+0100\n"
+"PO-Revision-Date: 2021-01-19 08:19+0100\n"
+"Last-Translator: \n"
+"Language-Team: Sitepilot\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_x\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: src/Acf.php:42 src/Acf.php:60
+msgid "Theme Options"
+msgstr "Thema Opties"
+
+#: src/Acf.php:43
+msgid "Theme"
+msgstr "Thema"
+
+#: src/Fields/BlockMargin.php:24
+msgid "Top"
+msgstr "Bovenkant"
+
+#: src/Fields/BlockMargin.php:25
+msgid "Bottom"
+msgstr "Onderkant"
+
+#: src/Fields/BlockMargin.php:26
+msgid "Top & Bottom"
+msgstr "Boven- & Onderkant"
+
+#: src/Fields/BlockMargin.php:27
+msgid "None"
+msgstr "Geen"
+
+#: src/Fields/Repeater.php:32
+msgid "New item"
+msgstr "Nieuw item"
+
+#: src/Template.php:32
+msgid "Templates"
+msgstr "Templates"
+
+#: src/Template.php:33
+msgid "Template"
+msgstr "Template"
+
+#: src/Template.php:34 src/Template.php:35 src/Template.php:37
+msgid "New Template"
+msgstr "Nieuwe Template"
+
+#: src/Template.php:36
+msgid "Edit Template"
+msgstr "Wijzig Template"
+
+#: src/Template.php:38
+msgid "View Template"
+msgstr "Bekijk Template"
+
+#: src/Template.php:39
+msgid "Search Templates"
+msgstr "Zoek Template"
+
+#: src/Template.php:40
+msgid "No Templates Found"
+msgstr "Geen Templates Gevonden"
+
+#: src/Template.php:41
+msgid "No templates in trash."
+msgstr "Geen templates in de prullenbak."
+
+#: src/Template.php:73
+msgid "Archive"
+msgstr "Archief"
+
+#: src/Template.php:78
+msgid "Search Results"
+msgstr "Zoekresultaten"
+
+#: src/Template.php:79
+msgid "Page Not Found"
+msgstr "Pagina niet gevonden"

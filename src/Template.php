@@ -70,7 +70,7 @@ class Template extends Module
         foreach (get_post_types() as $post_type) {
             if ((substr($post_type, 0, 3) == 'sp-' || in_array($post_type, ['post', 'page'])) && !in_array($post_type, ['sp-log', 'sp-template'])) {
                 $object = get_post_type_object($post_type);
-                $locations[$post_type . '_archive'] = $object->labels->name . ' ' . __('Archive', 'sp-theme');
+                $locations[$post_type . '_archive'] = $object->labels->singular_name . ' ' . __('Archive', 'sp-theme');
             }
         }
 
@@ -86,7 +86,7 @@ class Template extends Module
                 'fields' => array(
                     array(
                         'key' => 'field_dTXVnLBQ8o',
-                        'label' => 'Location',
+                        'label' => __('Location', 'sp-theme'),
                         'name' => 'sp_location',
                         'type' => 'checkbox',
                         'conditional_logic' => 0,
