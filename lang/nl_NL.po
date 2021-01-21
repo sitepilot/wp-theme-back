@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sitepilot Theme\n"
-"POT-Creation-Date: 2021-01-19 08:26+0100\n"
-"PO-Revision-Date: 2021-01-19 08:26+0100\n"
+"POT-Creation-Date: 2021-01-21 16:57+0100\n"
+"PO-Revision-Date: 2021-01-21 17:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: Sitepilot\n"
 "Language: nl\n"
@@ -15,6 +15,109 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_x\n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: blocks/contact-form-7/contact-form-7.php:13
+msgid "Contact Form 7"
+msgstr "Contact Form 7"
+
+#: blocks/contact-form-7/contact-form-7.php:24
+msgid "Contact Form"
+msgstr "Contact Formulier"
+
+#: blocks/contact-form-7/contact-form-7.php:29
+msgid "Button Alignment"
+msgstr "Knop Uitlijning"
+
+#: blocks/contact-form-7/contact-form-7.php:31
+#: src/Fields/Style/BackgroundColor.php:14 src/Fields/Style/BoxShadow.php:14
+#: src/Fields/Style/FontSize.php:14 src/Fields/Style/MarginBottom.php:14
+#: src/Fields/Style/MarginTop.php:14 src/Fields/Style/MaxWidth.php:14
+#: src/Fields/Style/Padding.php:14 src/Fields/Style/PaddingBottom.php:14
+#: src/Fields/Style/PaddingTop.php:14 src/Fields/Style/PaddingX.php:14
+#: src/Fields/Style/PaddingY.php:14 src/Fields/Style/Rounded.php:14
+#: src/Fields/Style/TextColor.php:14
+msgid "Default"
+msgstr "Standaard"
+
+#: blocks/contact-form-7/contact-form-7.php:32
+msgid "Left"
+msgstr "Links"
+
+#: blocks/contact-form-7/contact-form-7.php:33
+msgid "Center"
+msgstr "Midden"
+
+#: blocks/contact-form-7/contact-form-7.php:34
+msgid "Right"
+msgstr "Rechts"
+
+#: blocks/contact-form-7/contact-form-7.php:35
+msgid "Full Width"
+msgstr "Volledige Breedte"
+
+#: blocks/map/map.php:13
+msgid "Google Maps"
+msgstr "Google Maps"
+
+#: blocks/map/map.php:21
+msgid "Embed Code"
+msgstr "Insluit Code"
+
+#: blocks/section/section.php:13 blocks/section/section.php:26
+msgid "Section"
+msgstr "Sectie"
+
+#: blocks/section/section.php:28 blocks/section/section.php:43
+msgid "Background Color"
+msgstr "Achtergrondkleur"
+
+#: blocks/section/section.php:30 blocks/section/section.php:47
+msgid "Rounded Corners"
+msgstr "Afgeronde Hoeken"
+
+#: blocks/section/section.php:32 blocks/section/section.php:45
+msgid "Box Shadow"
+msgstr "Schaduw"
+
+#: blocks/section/section.php:34 blocks/section/section.php:51
+msgid "Padding X"
+msgstr "Padding X"
+
+#: blocks/section/section.php:36 blocks/section/section.php:53
+msgid "Padding Y"
+msgstr "Padding Y"
+
+#: blocks/section/section.php:39
+msgid "Content"
+msgstr "Inhoud"
+
+#: blocks/section/section.php:41
+msgid "Max Width"
+msgstr "Maximale Breedte"
+
+#: blocks/section/section.php:49
+msgid "Text Color"
+msgstr "Tekstkleur"
+
+#: blocks/youtube/youtube.php:13
+msgid "Youtube Video"
+msgstr "Youtube Video"
+
+#: blocks/youtube/youtube.php:25
+msgid "Youtube ID"
+msgstr "Youtube ID"
+
+#: blocks/youtube/youtube.php:27
+msgid "Autoplay"
+msgstr "Automatisch Afspelen"
+
+#: blocks/youtube/youtube.php:30
+msgid "Muted"
+msgstr "Gedempt"
+
+#: blocks/youtube/youtube.php:33
+msgid "Show Controls"
+msgstr "Toon Knoppen"
+
 #: src/Acf.php:42 src/Acf.php:60
 msgid "Theme Options"
 msgstr "Thema Opties"
@@ -23,25 +126,96 @@ msgstr "Thema Opties"
 msgid "Theme"
 msgstr "Thema"
 
-#: src/Fields/BlockMargin.php:24
-msgid "Top"
-msgstr "Bovenkant"
+#: src/Block.php:93
+msgid "Block Margin"
+msgstr "Blok Margin"
 
-#: src/Fields/BlockMargin.php:25
-msgid "Bottom"
-msgstr "Onderkant"
+#: src/Block.php:95
+msgid "Top Margin"
+msgstr "Margin Bovenkant"
 
-#: src/Fields/BlockMargin.php:26
-msgid "Top & Bottom"
-msgstr "Boven- & Onderkant"
+#: src/Block.php:96
+msgid "Bottom Margin"
+msgstr "Margin Onderkant"
 
-#: src/Fields/BlockMargin.php:27
+#: src/Fields/Preset/YesNo.php:14
+msgid "Yes"
+msgstr "Ja"
+
+#: src/Fields/Preset/YesNo.php:15
+msgid "No"
+msgstr "Nee"
+
+#: src/Fields/Repeater.php:29
+msgid "New item"
+msgstr "Nieuw item"
+
+#: src/Fields/Style/BackgroundColor.php:15 src/Fields/Style/TextColor.php:15
+msgid "Primary"
+msgstr "Primair"
+
+#: src/Fields/Style/BackgroundColor.php:16 src/Fields/Style/TextColor.php:16
+msgid "Secondary"
+msgstr "Secundair"
+
+#: src/Fields/Style/BackgroundColor.php:17
+#: src/Fields/Style/BackgroundColor.php:18
+#: src/Fields/Style/BackgroundColor.php:19
+#: src/Fields/Style/BackgroundColor.php:20
+#: src/Fields/Style/BackgroundColor.php:21
+#: src/Fields/Style/BackgroundColor.php:22
+#: src/Fields/Style/BackgroundColor.php:23
+#: src/Fields/Style/BackgroundColor.php:24
+#: src/Fields/Style/BackgroundColor.php:25
+#: src/Fields/Style/BackgroundColor.php:26 src/Fields/Style/TextColor.php:17
+#: src/Fields/Style/TextColor.php:18 src/Fields/Style/TextColor.php:19
+#: src/Fields/Style/TextColor.php:20 src/Fields/Style/TextColor.php:21
+#: src/Fields/Style/TextColor.php:22 src/Fields/Style/TextColor.php:23
+#: src/Fields/Style/TextColor.php:24 src/Fields/Style/TextColor.php:25
+#: src/Fields/Style/TextColor.php:26
+#, php-format
+msgid "Gray %s"
+msgstr "Grijs %s"
+
+#: src/Fields/Style/BoxShadow.php:15 src/Fields/Style/FontSize.php:15
+#: src/Fields/Style/MaxWidth.php:20 src/Fields/Style/Rounded.php:15
+msgid "Extra Small"
+msgstr "Extra Klein"
+
+#: src/Fields/Style/BoxShadow.php:16 src/Fields/Style/FontSize.php:16
+#: src/Fields/Style/MaxWidth.php:19 src/Fields/Style/Rounded.php:16
+msgid "Small"
+msgstr "Klein"
+
+#: src/Fields/Style/BoxShadow.php:17 src/Fields/Style/FontSize.php:17
+#: src/Fields/Style/MaxWidth.php:18 src/Fields/Style/Rounded.php:17
+msgid "Medium"
+msgstr "Medium"
+
+#: src/Fields/Style/BoxShadow.php:18 src/Fields/Style/FontSize.php:18
+#: src/Fields/Style/MaxWidth.php:17 src/Fields/Style/Rounded.php:18
+msgid "Large"
+msgstr "Groot"
+
+#: src/Fields/Style/BoxShadow.php:19 src/Fields/Style/FontSize.php:19
+#: src/Fields/Style/MaxWidth.php:16 src/Fields/Style/Rounded.php:19
+msgid "Extra Large"
+msgstr "Extra Groot"
+
+#: src/Fields/Style/BoxShadow.php:20 src/Fields/Style/Rounded.php:20
+msgid "Full"
+msgstr "Volledig"
+
+#: src/Fields/Style/MarginBottom.php:15 src/Fields/Style/MarginTop.php:15
+#: src/Fields/Style/Padding.php:15 src/Fields/Style/PaddingBottom.php:15
+#: src/Fields/Style/PaddingTop.php:15 src/Fields/Style/PaddingX.php:15
+#: src/Fields/Style/PaddingY.php:15
 msgid "None"
 msgstr "Geen"
 
-#: src/Fields/Repeater.php:32
-msgid "New item"
-msgstr "Nieuw item"
+#: src/Fields/Style/MaxWidth.php:15
+msgid "Container"
+msgstr "Container"
 
 #: src/Template.php:32
 msgid "Templates"
@@ -90,3 +264,9 @@ msgstr "Pagina niet gevonden"
 #: src/Template.php:89
 msgid "Location"
 msgstr "Locatie"
+
+#~ msgid "Top"
+#~ msgstr "Bovenkant"
+
+#~ msgid "Top & Bottom"
+#~ msgstr "Boven- & Onderkant"
