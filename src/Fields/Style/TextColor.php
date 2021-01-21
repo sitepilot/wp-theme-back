@@ -14,16 +14,16 @@ class TextColor extends Select
             'default' => __('Default', 'sp-theme'),
             'primary' => __('Primary', 'sp-theme'),
             'secondary' => __('Secondary', 'sp-theme'),
-            'gray-50' => __('Gray 50', 'sp-theme'),
-            'gray-100' => __('Gray 100', 'sp-theme'),
-            'gray-200' => __('Gray 200', 'sp-theme'),
-            'gray-300' => __('Gray 300', 'sp-theme'),
-            'gray-400' => __('Gray 400', 'sp-theme'),
-            'gray-500' => __('Gray 500', 'sp-theme'),
-            'gray-600' => __('Gray 600', 'sp-theme'),
-            'gray-700' => __('Gray 700', 'sp-theme'),
-            'gray-800' => __('Gray 800', 'sp-theme'),
-            'gray-900' => __('Gray 900', 'sp-theme')
+            'gray-50' => sprintf(__('Gray %s', 'sp-theme'), 50),
+            'gray-100' => sprintf(__('Gray %s', 'sp-theme'), 100),
+            'gray-200' => sprintf(__('Gray %s', 'sp-theme'), 200),
+            'gray-300' => sprintf(__('Gray %s', 'sp-theme'), 300),
+            'gray-400' => sprintf(__('Gray %s', 'sp-theme'), 400),
+            'gray-500' => sprintf(__('Gray %s', 'sp-theme'), 500),
+            'gray-600' => sprintf(__('Gray %s', 'sp-theme'), 600),
+            'gray-700' => sprintf(__('Gray %s', 'sp-theme'), 700),
+            'gray-800' => sprintf(__('Gray %s', 'sp-theme'), 800),
+            'gray-900' => sprintf(__('Gray %s', 'sp-theme'), 900),
         ]);
 
         $this->default_select('default');
