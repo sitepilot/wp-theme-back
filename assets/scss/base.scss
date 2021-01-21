@@ -1,0 +1,31 @@
+/* Main
+/* ----------------------------------------------- */
+.sp-block {      
+    *,
+    ::before,
+    ::after {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid; 
+        border-color: #e2e8f0; 
+    }
+    
+    a {
+        color: inherit;
+        text-decoration: inherit;
+    }
+
+    p, span, h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+    }
+}
+
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Blocks
+/* ----------------------------------------------- */
+@import "../../blocks/map/assets/block.scss";
+@import "../../blocks/section/assets/block.scss";
+@import "../../blocks/youtube/assets/block.scss";
+@import "../../blocks/contact-form-7/assets/block.scss";

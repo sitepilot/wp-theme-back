@@ -7,17 +7,13 @@ class Image extends Field
     /**
      * Returns the ACF field configuration.
      *
+     * @param bool $prefix
      * @return array
      */
-    public function config(): array
+    protected function config($prefix = true): array
     {
         return [
-            'key' => $this->key(),
-            'label' => $this->name,
-            'name' => $this->attribute,
             'type' => 'image',
-            'required' => $this->required,
-            'default_value' => $this->default,
             'return_format' => 'url'
         ];
     }

@@ -50,21 +50,40 @@ class Blocks extends Module
             $folders = scandir($dir);
 
             foreach ($folders as $block) {
-                $class = "\Sitepilot\Theme\Blocks\\";
-                $file = "$dir/$block/$block.php";
-                $words = explode('-', $block);
+                $this->load_block($dir, $block);
+            }
 
-                foreach ($words as $word) {
-                    $class .= ucfirst($word);
-                }
+            $dir = __DIR__ . '/../blocks';
+            $folders = scandir($dir);
 
-                if (file_exists($file)) {
-                    require_once $file;
+            foreach ($folders as $block) {
+                $this->load_block($dir, $block);
+            }
+        }
+    }
 
-                    if (method_exists($class, 'make')) {
-                        $this->blocks[] = new $class('sp-' . $block);
-                    }
-                }
+    /**
+     * Load block from dir.
+     *
+     * @param string $dir
+     * @param string $block
+     * @return void
+     */
+    private function load_block($dir, $block)
+    {
+        $class = "\Sitepilot\Theme\Blocks\\";
+        $file = "$dir/$block/$block.php";
+        $words = explode('-', $block);
+
+        foreach ($words as $word) {
+            $class .= ucfirst($word);
+        }
+
+        if (file_exists($file)) {
+            require_once $file;
+
+            if (class_exists($class)) {
+                $this->blocks[] = new $class();
             }
         }
     }

@@ -9,14 +9,10 @@ class GoogleMap extends Field
      *
      * @return array
      */
-    public function config(): array
+    protected function config($prefix = true): array
     {
         return [
-            'key' => $this->key(),
-            'label' => $this->name,
-            'name' => $this->attribute,
-            'type' => 'google_map',
-            'required' => $this->required,
+            'type' => 'google_map'
         ];
     }
 }

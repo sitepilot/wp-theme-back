@@ -9,15 +9,10 @@ class Color extends Field
      *
      * @return array
      */
-    public function config(): array
+    protected function config($prefix = true): array
     {
         return [
-            'key' => $this->key(),
-            'label' => $this->name,
-            'name' => $this->attribute,
-            'type' => 'color_picker',
-            'required' => $this->required,
-            'default_value' => $this->default
+            'type' => 'color_picker'
         ];
     }
 }

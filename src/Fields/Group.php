@@ -2,10 +2,10 @@
 
 namespace Sitepilot\Theme\Fields;
 
-class Repeater extends Field
+class Group extends Field
 {
     /**
-     * The repeatable fields.
+     * The grouped fields.
      *
      * @var array
      */
@@ -18,21 +18,13 @@ class Repeater extends Field
      */
     protected function config($prefix = true): array
     {
-        $subfields = [];
-        foreach ($this->fields as $field) {
-            $subfields[] = $field->get_config('acf', false);
-        }
-
         return [
-            'type' => 'repeater',
-            'layout' => 'block',
-            'button_label' => __('New item', 'sitepilot-block'),
-            'sub_fields' => $subfields
+            'type' => 'accordion'
         ];
     }
 
     /**
-     * Set the repeater fields.
+     * Set the group fields.
      *
      * @param array $fields
      * @return self
@@ -42,5 +34,20 @@ class Repeater extends Field
         $this->fields = $fields;
 
         return $this;
+    }
+
+    /**
+     * Returns subfields. 
+     *
+     * @return array
+     */
+    protected function subfields(): array
+    {
+        $subfields = [];
+        foreach ($this->fields as $field) {
+            $subfields[] = $field;
+        }
+
+        return $subfields;
     }
 }

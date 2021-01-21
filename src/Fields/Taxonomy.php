@@ -16,16 +16,12 @@ class Taxonomy extends Field
      *
      * @return array
      */
-    public function config(): array
+    protected function config($prefix = true): array
     {
         return [
-            'key' => $this->key(),
-            'label' => $this->name,
-            'name' => $this->attribute,
             'type' => 'taxonomy',
-            'required' => $this->required,
             'taxonomy' => $this->taxonomy,
-            'return_format' => 'id',
+            'return_format' => 'id'
         ];
     }
 

@@ -2,8 +2,6 @@
 
 namespace Sitepilot\Theme\Fields;
 
-use Sitepilot\Theme\Block;
-
 abstract class Field
 {
     /**
@@ -70,16 +68,50 @@ abstract class Field
      *
      * @return array
      */
-    abstract public function config(): array;
+    abstract protected function config(): array;
+
+    /**
+     * Get the field configuration.
+     * 
+     * @return mixed
+     */
+    public function get_config($type, $prefix = null)
+    {
+        switch ($type) {
+            case 'acf':
+                if (is_null($prefix)) $prefix = true;
+                
+                return array_merge([
+                    'key' => $this->key($prefix),
+                    'label' => $this->name,
+                    'name' => $this->attribute($prefix),
+                    'required' => $this->required,
+                    'default_value' => $this->default
+                ], $this->config());
+                break;
+        }
+
+        return null;
+    }
 
     /**
      * Returns the field key.
      *
      * @return string
      */
-    public function key()
+    public function key($prefix = false)
     {
-        return 'field_' . $this->namespace . '_' . $this->attribute;
+        return 'field_' . $this->namespace . '_' . $this->attribute($prefix);
+    }
+
+    /**
+     * Returns the field attribute name.
+     *
+     * @return string
+     */
+    public function attribute($prefix = false)
+    {
+        return ($prefix && substr($this->attribute, 0, 3) != 'sp_' ? 'sp_' : '') . $this->attribute;
     }
 
     /**
@@ -106,5 +138,57 @@ abstract class Field
         $this->required = $value;
 
         return $this;
+    }
+
+    /**
+     * Returns the field value.
+     *
+     * @param mixed $value
+     * @return void
+     */
+    protected function value($value)
+    {
+        return $value;
+    }
+
+    /**
+     * Get the field value.
+     *
+     * @return mixed
+     */
+    public function get_value($type = 'acf', $data = [])
+    {
+        switch ($type) {
+            case 'acf':
+                if (function_exists('get_field')) {
+                    $value = get_field($this->attribute(true));
+                }
+                break;
+            case 'shortcode':
+                $value = $data[$this->attribute()] ?? null;
+                break;
+        }
+
+        return $this->value(!is_null($value) && $value != 'default' ? $value : $this->default);
+    }
+
+    /**
+     * Returns the field subfields.
+     *
+     * @return array
+     */
+    protected function subfields(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the field subfields.
+     *
+     * @return void
+     */
+    public function get_subfields()
+    {
+        return $this->subfields();
     }
 }

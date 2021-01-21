@@ -1,0 +1,5 @@
+.sp-section {
+    .content>p:last-child, .content>h1:last-child, .content>h2:last-child, .content>h3:last-child, .content>h4:last-child, .content>h5:last-child, .content>h6:last-child {
+        margin-bottom: 0;
+    }
+}

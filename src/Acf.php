@@ -52,7 +52,7 @@ class Acf extends Module
             if (function_exists('acf_add_local_field_group')) {
                 $fields = [];
                 foreach ($this->theme->fields() as $field) {
-                    $fields[] = $field->config();
+                    $fields[] = $field->get_config('acf');
                 }
 
                 acf_add_local_field_group(array(
@@ -99,36 +99,45 @@ class Acf extends Module
     public function action_register_blocks(): void
     {
         foreach ($this->theme->blocks->get() as $block) {
-            $fields = [];
-            foreach ($block->fields() as $field) {
-                $fields[] = $field->config();
+            $fields = array();
+            foreach ($block->get_fields() as $field) {
+                $fields[] = $field->get_config('acf');
+
+                foreach ($field->get_subfields() as $field) {
+                    $fields[] = $field->get_config('acf');
+                }
             }
 
             if (function_exists('acf_register_block_type')) {
+                $align = array();
+                if ($block->config->supports->full_width ?? false) $align[] = 'full';
+                if ($block->config->supports->wide_width ?? false) $align[] = 'wide';
+
                 acf_register_block_type([
-                    'name' => $block->id,
-                    'title' => $block->name,
+                    'name' => $block->config->id,
+                    'title' => $block->config->name,
                     'render_callback' => array($block, 'render_block'),
                     'category' => 'sitepilot-block',
-                    'icon' => $block->icon,
+                    'icon' => $block->config->icon,
                     'supports' => [
-                        'align' => array('full', 'wide'),
-                        'align_text' => true
+                        'align' => count($align) ? $align : false,
+                        'align_text' => $block->config->supports->text_align ?? false,
+                        'jsx' => $block->config->supports->inner_blocks
                     ]
                 ]);
             }
 
             if (function_exists('acf_add_local_field_group')) {
                 acf_add_local_field_group(array(
-                    'key' => 'group_' . $block->id,
-                    'title' => $block->name,
+                    'key' => 'group_' . $block->config->id,
+                    'title' => $block->config->name,
                     'fields' => $fields,
                     'location' => array(
                         array(
                             array(
                                 'param' => 'block',
                                 'operator' => '==',
-                                'value' => 'acf/' . $block->id,
+                                'value' => 'acf/' . $block->config->id,
                             ),
                         ),
                     )
@@ -137,7 +146,7 @@ class Acf extends Module
 
             add_filter('allowed_block_types', function ($blocks) use ($block) {
                 if (is_array($blocks)) {
-                    $blocks[] = 'acf/' . $block->id;
+                    $blocks[] = 'acf/' . $block->config->id;
                 }
                 return $blocks;
             }, 99, 1);

@@ -48,7 +48,7 @@ class Model extends Module
     {
         return apply_filters('sp_theme_block_margin', '2rem');
     }
-    
+
     public function get_text_margin()
     {
         return apply_filters('sp_theme_text_margin', '1rem');
@@ -67,5 +67,10 @@ class Model extends Module
     public function get_tablet_breakpoint()
     {
         return apply_filters('sp_theme_tablet_breakpoint', null);
+    }
+
+    public function get_tailwind_version()
+    {
+        return apply_filters('sp_theme_tailwind_version', '2.0');
     }
 }

@@ -1,5 +1,7 @@
-<div class="{{ $class }} {{ isset($margin) && !empty($margin) ? $margin : 'mt-x mb-x' }}">
-    <div class="text-center not-found">
-        {{ $block->name }} @if($exception)- {{ $exception }}@endif
+<div class="{{ $block_class }}">
+    <div class="{{ isset($classes) && !empty($classes) ? $classes : 'mt-8 mb-8' }}">
+        <div class="text-center not-found">
+            {{ $block->config->name }} @if($exception)- {{ $exception }}@endif
+        </div>
     </div>
 </div>

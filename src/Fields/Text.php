@@ -9,15 +9,10 @@ class Text extends Field
      *
      * @return array
      */
-    public function config(): array
+    protected function config($prefix = true): array
     {
         return [
-            'key' => $this->key(),
-            'label' => $this->name,
-            'name' => $this->attribute,
-            'type' => 'text',
-            'required' => $this->required,
-            'default_value' => $this->default
+            'type' => 'text'
         ];
     }
 }

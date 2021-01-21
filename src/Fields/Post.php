@@ -16,16 +16,12 @@ class Post extends Field
      *
      * @return array
      */
-    public function config(): array
+    protected function config($prefix = true): array
     {
         return [
-            'key' => $this->key(),
-            'label' => $this->name,
-            'name' => $this->attribute,
             'type' => 'post_object',
-            'required' => $this->required,
             'post_type' => $this->post_types,
-            'return_format' => 'id',
+            'return_format' => 'id'
         ];
     }
 

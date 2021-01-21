@@ -5,52 +5,20 @@ namespace Sitepilot\Theme;
 use Exception;
 use ReflectionClass;
 use Sitepilot\Theme\Traits\HasFields;
+use Sitepilot\Theme\Fields\Style\MaxWidth;
 
 abstract class Block
 {
     use HasFields;
 
     /**
-     * The block id.
+     * Block support.
      *
-     * @var string
+     * @var array
      */
-    public $id;
+    public $supports;
 
-    /**
-     * The block name.
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * The caller directory.
-     *
-     * @var string
-     */
-    public $dir;
-
-    /**
-     * The block icon.
-     * 
-     * @var string
-     */
-    public $icon;
-
-    /**
-     * The default margin.
-     * 
-     * @var int
-     */
-    public $margin = 8;
-
-    /**
-     * The block class.
-     * 
-     * @var string
-     */
-    public $class;
+    public $styles = [];
 
     /**
      * Create a new block instance.
@@ -67,72 +35,69 @@ abstract class Block
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct(array $config = [])
     {
-        $this->id = $id;
-        $this->name = $id;
-        $this->class = $this->id;
-
         $reflectionClass = new ReflectionClass($this);
-        $this->dir = dirname($reflectionClass->getFileName());
 
-        add_shortcode($this->id, [$this, 'render_shortcode']);
+        $this->config = json_decode(json_encode(array_replace_recursive([
+            'id' => $config['id'],
+            'name' => $config['id'],
+            'class' => $config['id'],
+            'icon' => '',
+            'category' => 'sp-blocks',
+            'supports' => array(
+                'full_width' => false,
+                'wide_width' => false,
+                'text_align' => false,
+                'inner_blocks' => false,
+                'block_margin' => true
+            ),
+            'dir' => dirname($reflectionClass->getFileName()),
+        ], $config)));
+
+        add_shortcode($this->config->id, [$this, 'render_shortcode']);
     }
 
     /**
-     * Set the block icon.
-     * 
-     * @return self
-     */
-    public function icon($icon): self
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
-    /**
-     * Set the block name.
-     * 
-     * @return self
-     */
-    public function name($name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Set the block class.
-     * 
-     * @return self
-     */
-    public function class($class): self
-    {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * Get additional block settings.
-     * 
-     * @return array
-     */
-    public function settings(): array
-    {
-        return [];
-    }
-
-    /**
-     * Get view data.
+     * Returns block view data.
      *
      * @return array
      */
-    public function data($data, $post_id): array
+    protected function data($data, $post_id): array
     {
         return array_merge($data, []);
+    }
+
+    /**
+     * Get block view data.
+     *
+     * @param array $data
+     * @param int $post_id
+     * @return array
+     */
+    public function get_data($data, $post_id): array
+    {
+        return array_merge($data, $this->data($data, $post_id));
+    }
+
+    /**
+     * Returns and extends block fields.
+     *
+     * @return array
+     */
+    public function get_fields(): array
+    {
+        $fields = $this->fields();
+
+        if ($this->config->supports->block_margin) {
+            $fields[] = $this->field_group(__('Block Margin', 'sp-theme'), 'block_margin')
+                ->fields([
+                    $this->field_style_margin_top(__('Top Margin', 'sp-theme'), 'margin_top')->default_value(8),
+                    $this->field_style_margin_bottom(__('Bottom Margin', 'sp-theme'), 'margin_bottom')->default_value(8)
+                ]);
+        }
+
+        return $fields;
     }
 
     /**
@@ -142,28 +107,38 @@ abstract class Block
      */
     public function render_block($block, $content = '', $is_preview = false, $post_id = 0): void
     {
-        $field_data = [];
-        foreach ($this->fields() as $field) {
-            $value = get_field($field->attribute);
-            $field_data[str_replace('sp_', '', $field->attribute)] = $value ? $value : $field->default;
+        $field_data = $classes = array();
+        foreach ($this->get_fields() as $field) {
+            $value = $field->get_value('acf');
+            $field_data[$field->attribute()] = $value;
+
+            foreach ($field->get_subfields() as $field) {
+                $value = $field->get_value('acf');
+                $field_data[$field->attribute()] = $value;
+
+                if (!empty($value) && in_array($field->attribute(), ['margin_top', 'margin_bottom'])) {
+                    $classes[] = $value;
+                }
+            }
         }
 
-        $data = $this->data(array_merge([
+        $data = $this->get_data(array_merge([
             'post_id' => $post_id,
             'block' => $this,
-            'class' => 'sp-block ' . $this->class
+            'block_class' => 'sp-block ' . $this->config->class,
+            'classes' => implode(" ", $classes)
         ], $field_data), $post_id);
 
         if (!empty($block['className'])) {
-            $data['class'] .= ' ' . $block['className'];
+            $data['block_class'] .= ' ' . $block['className'];
         }
 
         if (!empty($block['align'])) {
-            $data['class'] .= ' align' . $block['align'];
+            $data['block_class'] .= ' align' . $block['align'];
         }
 
         if (!empty($block['align_text'])) {
-            $data['class'] .= ' has-text-align-' . $block['align_text'];
+            $data['block_class'] .= ' has-text-align-' . $block['align_text'];
         }
 
         echo $this->render($data);
@@ -178,16 +153,26 @@ abstract class Block
      */
     public function render_shortcode($args = [], $slot = ''): string
     {
-        $field_data = [];
-        foreach ($this->fields() as $field) {
-            $key = str_replace('sp_', '', $field->attribute);
-            $field_data[$key] = $args[$key] ?? $field->default;
+        $field_data = $classes = array();
+        foreach ($this->get_fields() as $field) {
+            $value = $field->get_value('shortcode', $args);
+            $field_data[$field->attribute()] = $value;
+
+            foreach ($field->get_subfields() as $field) {
+                $value = $field->get_value('shortcode', $args);
+                $field_data[$field->attribute()] = $value;
+
+                if (!empty($value) && in_array($field->attribute(), ['margin_top', 'margin_bottom'])) {
+                    $classes[] = $value;
+                }
+            }
         }
 
-        $data = $this->data(array_merge([
+        $data = $this->get_data(array_merge([
             'post_id' => get_the_ID(),
             'block' => $this,
-            'class' => 'sp-block sp-shortcode ' . $this->class,
+            'block_class' => 'sp-block sp-shortcode ' . $this->config->class,
+            'classes' => implode(" ", $classes)
         ], $field_data, ['slot' => $slot ? $slot : '']), get_the_ID());
 
         return $this->render($data);
@@ -201,8 +186,7 @@ abstract class Block
      */
     private function render(array $data): string
     {
-        $data = $this->filter_view_data($data);
-        $blade = Base::blade([$this->dir . '/views']);
+        $blade = Base::blade([$this->config->dir . '/views']);
 
         try {
             $view = $blade->make($data['layout'] ?? 'frontend', $data)->render();
@@ -218,32 +202,5 @@ abstract class Block
         } else {
             return $view;
         }
-    }
-
-    /**
-     * Filter view data.
-     *
-     * @return array
-     */
-    public function filter_view_data($data): array
-    {
-        if (isset($data['margin'])) {
-            switch ($data['margin']) {    
-                case 'none':
-                    $data['margin'] = "mt-0 mb-0";
-                    break;
-                case 'top':
-                    $data['margin'] = "mt-x mb-0";
-                    break;
-                case 'bottom':
-                    $data['margin'] = "mt-0 mb-x";
-                    break;
-                default:
-                    $data['margin'] = "mt-x mb-x";;
-                    break;
-            }
-        }
-
-        return $data;
     }
 }
