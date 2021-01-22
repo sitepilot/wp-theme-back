@@ -1,10 +1,7 @@
-
-/* Atra Footer Fix
-/* ----------------------------------------------- */
 module.exports = {
     astra: {
         /**
-         * Force footer to the bottom of the screen.
+         * Astra - Force footer to the bottom of the screen.
          */
         footerFix: function () {
             let adminbarHeight = jQuery('#wpadminbar').length ? jQuery('#wpadminbar').height() : 0;
