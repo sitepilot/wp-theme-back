@@ -5,20 +5,10 @@ namespace Sitepilot\Theme;
 use Exception;
 use ReflectionClass;
 use Sitepilot\Theme\Traits\HasFields;
-use Sitepilot\Theme\Fields\Style\MaxWidth;
 
 abstract class Block
 {
     use HasFields;
-
-    /**
-     * Block support.
-     *
-     * @var array
-     */
-    public $supports;
-
-    public $styles = [];
 
     /**
      * Create a new block instance.
@@ -173,7 +163,7 @@ abstract class Block
             'block' => $this,
             'block_class' => 'sp-block sp-shortcode ' . $this->config->class,
             'classes' => implode(" ", $classes)
-        ], $field_data, ['slot' => $slot ? $slot : '']), get_the_ID());
+        ], $field_data, ['slot' => !empty($slot) ? $slot : $field_data['slot']]), get_the_ID());
 
         return $this->render($data);
     }
