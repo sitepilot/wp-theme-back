@@ -31,7 +31,7 @@ class PaddingY extends Select
 
     protected function value($value)
     {
-         $classes = [
+        $classes = [
             0 => 'py-0',
             1 => 'py-1',
             2 => 'py-2',

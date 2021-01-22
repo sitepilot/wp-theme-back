@@ -80,7 +80,7 @@ abstract class Field
         switch ($type) {
             case 'acf':
                 if (is_null($prefix)) $prefix = true;
-                
+
                 return array_merge([
                     'key' => $this->key($prefix),
                     'label' => $this->name,
