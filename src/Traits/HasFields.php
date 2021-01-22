@@ -24,6 +24,7 @@ use Sitepilot\Theme\Fields\Style\PaddingX;
 use Sitepilot\Theme\Fields\Style\PaddingY;
 use Sitepilot\Theme\Fields\Style\BoxShadow;
 use Sitepilot\Theme\Fields\Style\MarginTop;
+use Sitepilot\Theme\Fields\Style\TextAlign;
 use Sitepilot\Theme\Fields\Style\TextColor;
 use Sitepilot\Theme\Fields\Style\PaddingTop;
 use Sitepilot\Theme\Fields\Style\MarginBottom;
@@ -125,6 +126,11 @@ trait HasFields
     public function field_style_text_color($name, $attribute)
     {
         return TextColor::make($name, $attribute, $this->field_namespace());
+    }
+
+    public function field_style_text_align($name, $attribute)
+    {
+        return TextAlign::make($name, $attribute, $this->field_namespace());
     }
 
     public function field_style_bg_color($name, $attribute)
