@@ -32,6 +32,7 @@ class MarginBottom extends Select
     protected function value($value)
     {
         $classes = [
+            'x' => 'mb-x',
             0 => 'mb-0',
             1 => 'mb-1',
             2 => 'mb-2',

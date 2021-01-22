@@ -32,17 +32,18 @@ class MarginTop extends Select
     protected function value($value)
     {
         $classes = [
+            'x' => 'mt-x',
             0 => 'mt-0',
             1 => 'mt-1',
             2 => 'mt-2',
-            4 => 'mt-4', 
-            6 => 'mt-6', 
+            4 => 'mt-4',
+            6 => 'mt-6',
             8 => 'mt-8',
-            10 => 'mt-10', 
+            10 => 'mt-10',
             12 => 'mt-12',
-            14 => 'mt-14', 
-            16 => 'mt-16', 
-            20 => 'mt-20', 
+            14 => 'mt-14',
+            16 => 'mt-16',
+            20 => 'mt-20',
             24 => 'mt-24'
         ];
 

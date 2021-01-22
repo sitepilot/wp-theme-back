@@ -92,8 +92,8 @@ abstract class Block
         if ($this->config->supports->block_margin) {
             $fields[] = $this->field_group(__('Block Margin', 'sp-theme'), 'block_margin')
                 ->fields([
-                    $this->field_style_margin_top(__('Top Margin', 'sp-theme'), 'margin_top')->default_value(8),
-                    $this->field_style_margin_bottom(__('Bottom Margin', 'sp-theme'), 'margin_bottom')->default_value(8)
+                    $this->field_style_margin_top(__('Top Margin', 'sp-theme'), 'margin_top')->default_value('x'),
+                    $this->field_style_margin_bottom(__('Bottom Margin', 'sp-theme'), 'margin_bottom')->default_value('x')
                 ]);
         }
 
