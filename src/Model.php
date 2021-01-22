@@ -73,4 +73,9 @@ class Model extends Module
     {
         return apply_filters('sp_theme_tailwind_version', '2.0');
     }
+
+    public function hide_recaptcha_badge()
+    {
+        return apply_filters('sp_theme_hide_recaptcha_badge', false);
+    }
 }

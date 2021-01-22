@@ -26,3 +26,9 @@ margin-bottom: var(--sp-text-margin);
 margin-bottom: var(--sp-block-margin);
 }
 @endif
+
+@if($theme->model->hide_recaptcha_badge())
+.grecaptcha-badge {
+display: none !important;
+}
+@endif
