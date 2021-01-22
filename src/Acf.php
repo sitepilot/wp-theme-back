@@ -117,7 +117,7 @@ class Acf extends Module
                     'name' => $block->config->id,
                     'title' => $block->config->name,
                     'render_callback' => array($block, 'render_block'),
-                    'category' => 'sitepilot-block',
+                    'category' => $block->config->category,
                     'icon' => $block->config->icon,
                     'supports' => [
                         'align' => count($align) ? $align : false,

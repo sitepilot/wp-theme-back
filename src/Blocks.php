@@ -97,7 +97,7 @@ class Blocks extends Module
     {
         array_splice($categories, 1, 0, array(
             array(
-                'slug' => 'sitepilot-block',
+                'slug' => 'sp-blocks',
                 'title' => $this->theme->model->get_block_category_name()
             ),
         ));
