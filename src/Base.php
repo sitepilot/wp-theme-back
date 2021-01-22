@@ -135,6 +135,6 @@ abstract class Base
      */
     public function get_theme_css(): string
     {
-        return self::blade()->make('theme-css', ['theme' => $this])->render();
+        return preg_replace("/\r|\n/", " ", self::blade()->make('theme-css', ['theme' => $this])->render());
     }
 }
