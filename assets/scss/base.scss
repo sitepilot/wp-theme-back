@@ -29,3 +29,24 @@
 @import "../../blocks/section/assets/block.scss";
 @import "../../blocks/youtube/assets/block.scss";
 @import "../../blocks/contact-form-7/assets/block.scss";
+
+/* Base
+/* ----------------------------------------------- */
+.sp-block {
+    .mt-x {
+        margin-top: var(--sp-block-margin); 
+    }
+
+    .mb-x {
+        margin-bottom: var(--sp-block-margin); 
+    }
+
+    .not-found { 
+        @apply p-4 border border-gray-400 border-dashed;
+    }
+}
+
+.wp-block-columns { 
+    margin-top: var(--sp-block-margin); 
+    margin-bottom: var(--sp-block-margin); 
+}
