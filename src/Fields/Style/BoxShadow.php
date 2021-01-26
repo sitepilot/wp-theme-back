@@ -11,7 +11,7 @@ class BoxShadow extends Select
         parent::__construct(...$arguments);
 
         $this->options([
-            'default' => __('Default', 'sp-theme'),
+            'default' => '',
             'xs' => __('Extra Small', 'sp-theme'),
             'sm' => __('Small', 'sp-theme'),
             'md' => __('Medium', 'sp-theme'),

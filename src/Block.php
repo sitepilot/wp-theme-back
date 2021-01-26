@@ -4,11 +4,19 @@ namespace Sitepilot\Theme;
 
 use Exception;
 use ReflectionClass;
+use Sitepilot\Theme\Fields\Field;
 use Sitepilot\Theme\Traits\HasFields;
 
 abstract class Block
 {
     use HasFields;
+
+    /**
+     * Holds the block view data.
+     *
+     * @var array
+     */
+    private $view_data;
 
     /**
      * Create a new block instance.
@@ -35,13 +43,15 @@ abstract class Block
             'class' => $config['id'],
             'icon' => '',
             'category' => 'sp-blocks',
-            'supports' => array(
+            'supports' => [
                 'full_width' => false,
                 'wide_width' => false,
                 'text_align' => false,
-                'inner_blocks' => false,
-                'block_margin' => true
-            ),
+                'inner_blocks' => false
+            ],
+            'defaults' => [
+                'width' => ''
+            ],
             'dir' => dirname($reflectionClass->getFileName()),
         ], $config)));
 
@@ -67,6 +77,8 @@ abstract class Block
      */
     public function get_data($data, $post_id): array
     {
+        $this->view_data = $data;
+
         return array_merge($data, $this->data($data, $post_id));
     }
 
@@ -79,14 +91,6 @@ abstract class Block
     {
         $fields = $this->fields();
 
-        if ($this->config->supports->block_margin) {
-            $fields[] = $this->field_group(__('Block Margin', 'sp-theme'), 'block_margin')
-                ->fields([
-                    $this->field_style_margin_top(__('Top Margin', 'sp-theme'), 'margin_top')->default_value('x'),
-                    $this->field_style_margin_bottom(__('Bottom Margin', 'sp-theme'), 'margin_bottom')->default_value('x')
-                ]);
-        }
-
         return $fields;
     }
 
@@ -97,39 +101,39 @@ abstract class Block
      */
     public function render_block($block, $content = '', $is_preview = false, $post_id = 0): void
     {
-        $field_data = $classes = array();
+        $field_data = array();
         foreach ($this->get_fields() as $field) {
             $value = $field->get_value('acf');
             $field_data[$field->attribute()] = $value;
 
-            foreach ($field->get_subfields() as $field) {
-                $value = $field->get_value('acf');
-                $field_data[$field->attribute()] = $value;
-
-                if (!empty($value) && in_array($field->attribute(), ['margin_top', 'margin_bottom'])) {
-                    $classes[] = $value;
+            foreach ($field->get_subfields() as $subfield) {
+                if ($subfield instanceof Field) {
+                    $value = $subfield->get_value('acf');
+                    $field_data[$subfield->attribute()] = $value;
                 }
             }
         }
 
+        $classes = [
+            'sp-block', $this->config->class
+        ];
+
+        if (!empty($block['className'])) $classes[] = $block['className'];
+        if (!empty($block['align'])) $classes[] = 'align' . $block['align'];
+        if (!empty($block['align_text'])) $classes[] = 'has-text-align-' . $block['align_text'];
+
+        $id = isset($block['id']) ? ' id="' . $block['id'] . '"' : "";
+        $class = count($classes) ? ' class="' . implode(" ", $classes) . '"' : "";
+        $block_open = "<div{$class}{$id}>";
+
         $data = $this->get_data(array_merge([
             'post_id' => $post_id,
             'block' => $this,
-            'block_class' => 'sp-block ' . $this->config->class,
-            'classes' => implode(" ", $classes)
+            'block_class' => '',
+            'classes' => '',
+            'block_start' => $block_open,
+            'block_end' => "</div>"
         ], $field_data), $post_id);
-
-        if (!empty($block['className'])) {
-            $data['block_class'] .= ' ' . $block['className'];
-        }
-
-        if (!empty($block['align'])) {
-            $data['block_class'] .= ' align' . $block['align'];
-        }
-
-        if (!empty($block['align_text'])) {
-            $data['block_class'] .= ' has-text-align-' . $block['align_text'];
-        }
 
         echo $this->render($data);
     }
@@ -143,27 +147,35 @@ abstract class Block
      */
     public function render_shortcode($args = [], $slot = ''): string
     {
-        $field_data = $classes = array();
+        $field_data = array();
         foreach ($this->get_fields() as $field) {
             $value = $field->get_value('shortcode', $args);
             $field_data[$field->attribute()] = $value;
 
-            foreach ($field->get_subfields() as $field) {
-                $value = $field->get_value('shortcode', $args);
-                $field_data[$field->attribute()] = $value;
-
-                if (!empty($value) && in_array($field->attribute(), ['margin_top', 'margin_bottom'])) {
-                    $classes[] = $value;
+            foreach ($field->get_subfields() as $subkey => $subfield) {
+                if ($subfield instanceof Field) {
+                    $value = $subfield->get_value('shortcode', $args);
+                    $field_data[$subfield->attribute()] = $value;
                 }
             }
         }
 
+        $classes = [
+            'sp-block', 'sp-shortcode', $this->config->class
+        ];
+
+        $id = isset($block['id']) ? ' id="' . $block['id'] . '"' : "";
+        $class = count($classes) ? ' class="' . implode(" ", $classes) . '"' : "";
+        $block_open = "<div{$class}{$id}>";
+
         $data = $this->get_data(array_merge([
             'post_id' => get_the_ID(),
             'block' => $this,
-            'block_class' => 'sp-block sp-shortcode ' . $this->config->class,
-            'classes' => implode(" ", $classes)
-        ], $field_data, ['slot' => !empty($slot) ? $slot : $field_data['slot']]), get_the_ID());
+            'block_class' => '',
+            'classes' => '',
+            'block_start' => $block_open,
+            'block_end' => "</div>"
+        ], $field_data, ['slot' => !empty($slot) ? $slot : $field_data['slot'] ?? '']), get_the_ID());
 
         return $this->render($data);
     }
@@ -188,9 +200,61 @@ abstract class Block
             if (empty($data['exception'])) {
                 $data['exception'] = "";
             }
-            return $blade->make('block-404', $data)->render();
-        } else {
-            return $view;
+
+            $view = $blade->make('block-404', $data)->render();
         }
+
+        return (isset($data['block_start']) ? $data['block_start'] : '') . $view . (isset($data['block_end']) ? $data['block_end'] : '');
+    }
+
+    /**
+     * Returns class elements.
+     *
+     * @param array $fields
+     * @param array $additonal_classes
+     * @return void
+     */
+    public function get_classes(array $classes): string
+    {
+        $return = array();
+
+        foreach ($classes as $class) {
+            if (substr($class, 0, 6) == 'field:') {
+                $field = str_replace('field:', '', $class);
+
+                if (isset($this->view_data[$field])) {
+                    $return[] = $this->view_data[$field];
+                }
+            } else {
+                $return[] = $class;
+            }
+        }
+
+        return implode(" ", array_filter($return));
+    }
+
+    /**
+     * Returns style elements.
+     *
+     * @param array $fields
+     * @param array $additonal_classes
+     * @return void
+     */
+    public function get_styles(array $fields, array $additonal_styles = []): string
+    {
+        $styles = array();
+
+        foreach ($fields as $field => $style) {
+            if (isset($this->view_data[$field])) {
+                $styles[] = sprintf($style, $this->view_data[$field]);
+            }
+        }
+
+        return implode(" ", array_filter(array_merge($styles, $additonal_styles)));
+    }
+
+    public function get_image_url($image_id, $size = 'full')
+    {
+        return wp_get_attachment_image_src($image_id, $size)[0] ?? '';
     }
 }

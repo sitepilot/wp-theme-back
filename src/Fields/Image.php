@@ -14,7 +14,7 @@ class Image extends Field
     {
         return [
             'type' => 'image',
-            'return_format' => 'url'
+            'return_format' => 'id'
         ];
     }
 }

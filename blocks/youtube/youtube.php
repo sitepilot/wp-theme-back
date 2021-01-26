@@ -31,13 +31,22 @@ class Youtube extends Block
                 ->default_value(0),
 
             $this->field_preset_yes_no(__('Show Controls', 'sp-theme'), 'controls')
-                ->default_value(1)
+                ->default_value(1),
+
+            $this->field_style_margin(__('Margin', 'sp-theme'), 'margin')
+                ->default_value([
+                    'bottom' => 'x'
+                ])
         ];
     }
 
     protected function data($data, $post_id): array
     {
         return [
+            'classes' => $this->get_classes([
+                'relative',
+                'field:margin'
+            ]),
             'embed_url' => $data['youtube_id'] ? "https://www.youtube.com/embed/{$data['youtube_id']}?autoplay={$data['autoplay']}&mute={$data['muted']}&showinfo={$data['controls']}&controls={$data['controls']}" : ''
         ];
     }

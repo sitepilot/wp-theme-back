@@ -11,7 +11,7 @@ class TextColor extends Select
         parent::__construct(...$arguments);
 
         $this->options([
-            'default' => __('Default', 'sp-theme'),
+            'default' => '',
             'primary' => __('Primary', 'sp-theme'),
             'secondary' => __('Secondary', 'sp-theme'),
             'gray-50' => sprintf(__('Gray %s', 'sp-theme'), 50),

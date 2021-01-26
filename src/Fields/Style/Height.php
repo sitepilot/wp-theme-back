@@ -4,7 +4,7 @@ namespace Sitepilot\Theme\Fields\Style;
 
 use Sitepilot\Theme\Fields\Select;
 
-class TextAlign extends Select
+class Height extends Select
 {
     public function __construct(...$arguments)
     {
@@ -12,10 +12,7 @@ class TextAlign extends Select
 
         $this->options([
             'default' => '',
-            'left' => __('Left', 'sp-theme'),
-            'center' => __('Center', 'sp-theme'),
-            'right' => __('Right', 'sp-theme'),
-            'justify' => __('Justify', 'sp-theme')
+            'screen' => __('Screen', 'sp-theme')
         ]);
 
         $this->default_select('default');
@@ -24,10 +21,7 @@ class TextAlign extends Select
     protected function value($value)
     {
         $classes = [
-            'left' => 'text-left',
-            'center' => 'text-center',
-            'right' => 'text-right',
-            'justify' => 'text-justify'
+            'screen' => 'h-screen'
         ];
 
         return $classes[$value] ?? $value;

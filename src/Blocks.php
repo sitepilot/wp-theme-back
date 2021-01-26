@@ -22,6 +22,7 @@ class Blocks extends Module
 
         /* Actions */
         add_action('after_setup_theme', [$this, 'action_autoload_blocks']);
+        add_action('after_setup_theme', [$this, 'action_register_theme_colors']);
 
         /* Filters */
         add_filter('block_categories', [$this, 'filter_block_categories']);
@@ -129,10 +130,35 @@ class Blocks extends Module
                 'core/separator',
                 'core/code',
                 'core/spacer',
+                'core/block',
+                'core/gallery',
+                'core/audio',
+                'core/video',
                 'fl-builder/layout'
             ]);
         }
 
         return $blocks;
+    }
+
+    /**
+     * Register theme colors.
+     *
+     * @return void
+     */
+    public function action_register_theme_colors(): void
+    {
+        add_theme_support('editor-color-palette', array(
+            array(
+                'name'  => __('Primary', 'sp-theme'),
+                'slug'  => 'primary',
+                'color'    => $this->theme->model->get_primary_color()
+            ),
+            array(
+                'name'  => __('Green', 'sp-theme'),
+                'slug'  => 'secondary',
+                'color' => $this->theme->model->get_secondary_color()
+            )
+        ));
     }
 }

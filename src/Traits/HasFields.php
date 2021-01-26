@@ -14,22 +14,22 @@ use Sitepilot\Theme\Fields\Select;
 use Sitepilot\Theme\Fields\Repeater;
 use Sitepilot\Theme\Fields\Taxonomy;
 use Sitepilot\Theme\Fields\Textarea;
+use Sitepilot\Theme\Fields\Dimension;
 use Sitepilot\Theme\Fields\GoogleMap;
 use Sitepilot\Theme\Fields\Preset\YesNo;
+use Sitepilot\Theme\Fields\Style\Height;
+use Sitepilot\Theme\Fields\Style\Margin;
+use Sitepilot\Theme\Fields\Style\Opacity;
 use Sitepilot\Theme\Fields\Style\Padding;
 use Sitepilot\Theme\Fields\Style\Rounded;
 use Sitepilot\Theme\Fields\Style\FontSize;
 use Sitepilot\Theme\Fields\Style\MaxWidth;
-use Sitepilot\Theme\Fields\Style\PaddingX;
-use Sitepilot\Theme\Fields\Style\PaddingY;
 use Sitepilot\Theme\Fields\Style\BoxShadow;
-use Sitepilot\Theme\Fields\Style\MarginTop;
 use Sitepilot\Theme\Fields\Style\TextAlign;
 use Sitepilot\Theme\Fields\Style\TextColor;
-use Sitepilot\Theme\Fields\Style\PaddingTop;
-use Sitepilot\Theme\Fields\Style\MarginBottom;
-use Sitepilot\Theme\Fields\Style\PaddingBottom;
+use Sitepilot\Theme\Fields\Preset\ImageSize;
 use Sitepilot\Theme\Fields\Style\BackgroundColor;
+use Sitepilot\Theme\Fields\Style\BackgroundAttachment;
 
 trait HasFields
 {
@@ -118,6 +118,11 @@ trait HasFields
         return Group::make($name, $attribute, $this->field_namespace());
     }
 
+    public function field_sp_dimension($name, $attribute)
+    {
+        return Dimension::make($name, $attribute, $this->field_namespace());
+    }
+
     public function field_style_max_width($name, $attribute)
     {
         return MaxWidth::make($name, $attribute, $this->field_namespace());
@@ -138,39 +143,14 @@ trait HasFields
         return BackgroundColor::make($name, $attribute, $this->field_namespace());
     }
 
-    public function field_style_margin_top($name, $attribute)
+    public function field_style_bg_attachment($name, $attribute)
     {
-        return MarginTop::make($name, $attribute, $this->field_namespace());
-    }
-
-    public function field_style_margin_bottom($name, $attribute)
-    {
-        return MarginBottom::make($name, $attribute, $this->field_namespace());
+        return BackgroundAttachment::make($name, $attribute, $this->field_namespace());
     }
 
     public function field_style_padding($name, $attribute)
     {
         return Padding::make($name, $attribute, $this->field_namespace());
-    }
-
-    public function field_style_padding_x($name, $attribute)
-    {
-        return PaddingX::make($name, $attribute, $this->field_namespace());
-    }
-
-    public function field_style_padding_y($name, $attribute)
-    {
-        return PaddingY::make($name, $attribute, $this->field_namespace());
-    }
-
-    public function field_style_padding_bottom($name, $attribute)
-    {
-        return PaddingBottom::make($name, $attribute, $this->field_namespace());
-    }
-
-    public function field_style_padding_top($name, $attribute)
-    {
-        return PaddingTop::make($name, $attribute, $this->field_namespace());
     }
 
     public function field_style_rounded($name, $attribute)
@@ -188,8 +168,28 @@ trait HasFields
         return FontSize::make($name, $attribute, $this->field_namespace());
     }
 
+    public function field_style_height($name, $attribute)
+    {
+        return Height::make($name, $attribute, $this->field_namespace());
+    }
+
+    public function field_style_opacity($name, $attribute)
+    {
+        return Opacity::make($name, $attribute, $this->field_namespace());
+    }
+
+    public function field_style_margin($name, $attribute)
+    {
+        return Margin::make($name, $attribute, $this->field_namespace());
+    }
+
     public function field_preset_yes_no($name, $attribute)
     {
         return YesNo::make($name, $attribute, $this->field_namespace());
+    }
+
+    public function field_preset_image_size($name, $attribute)
+    {
+        return ImageSize::make($name, $attribute, $this->field_namespace());
     }
 }

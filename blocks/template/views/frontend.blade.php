@@ -1,5 +1,5 @@
-@if($embed_code)
+@if($template)
 <div class="{{ $classes }}">
-    {!! $embed_code !!}
+    {!! $template !!}
 </div>
 @endif

@@ -40,6 +40,20 @@ abstract class Field
     public $namespace;
 
     /**
+     * The field description.
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * The field conditional rules.
+     *
+     * @var array
+     */
+    public $conditionals = [];
+
+    /**
      * Create a new element.
      *
      * @return static
@@ -81,12 +95,23 @@ abstract class Field
             case 'acf':
                 if (is_null($prefix)) $prefix = true;
 
+                $conditional_logic = array();
+
+                foreach ($this->conditionals as $conditional) {
+                    $conditional_logic[] = [
+                        'field' => $this->key($prefix, $conditional['field']),
+                        'operator' => $conditional['operator'] . $conditional['value']
+                    ];
+                }
+
                 return array_merge([
                     'key' => $this->key($prefix),
                     'label' => $this->name,
                     'name' => $this->attribute($prefix),
                     'required' => $this->required,
-                    'default_value' => $this->default
+                    'default_value' => $this->default,
+                    'instructions' => $this->description,
+                    'conditional_logic' => $conditional_logic
                 ], $this->config());
                 break;
         }
@@ -99,9 +124,9 @@ abstract class Field
      *
      * @return string
      */
-    public function key($prefix = false)
+    public function key($prefix = false, $attribute = null)
     {
-        return 'field_' . $this->namespace . '_' . $this->attribute($prefix);
+        return 'field_' . $this->namespace . '_' . $this->attribute($prefix, $attribute);
     }
 
     /**
@@ -109,9 +134,13 @@ abstract class Field
      *
      * @return string
      */
-    public function attribute($prefix = false)
+    public function attribute($prefix = false, $attribute = null)
     {
-        return ($prefix && substr($this->attribute, 0, 3) != 'sp_' ? 'sp_' : '') . $this->attribute;
+        if (!$attribute) {
+            $attribute = $this->attribute;
+        }
+
+        return ($prefix && substr($attribute, 0, 3) != 'sp_' ? 'sp_' : '') . $attribute;
     }
 
     /**
@@ -136,6 +165,38 @@ abstract class Field
     public function required($value = true)
     {
         $this->required = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the field's description value;
+     *
+     * @param string $value
+     * @return $this
+     */
+    public function description($value)
+    {
+        $this->description = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set a field conditional rule.
+     *
+     * @param string $field
+     * @param string $operator
+     * @param string $value
+     * @return void
+     */
+    public function conditional($field_name, $operator = '!=', $value = 'empty')
+    {
+        $this->conditionals[] = [
+            'field' => $field_name,
+            'operator' => $operator,
+            'value' => $value
+        ];
 
         return $this;
     }
@@ -166,7 +227,20 @@ abstract class Field
                 break;
             case 'shortcode':
                 $value = $data[$this->attribute()] ?? null;
+                if (!is_null(json_decode($value, true))) {
+                    $value = json_decode($value, true);
+                }
                 break;
+        }
+
+        if (is_array($value) && is_array($this->default)) {
+            foreach ($value as $key => $field_value) {
+                if (isset($this->default[$key]) && (is_null($field_value) || $field_value == 'default')) {
+                    $value[$key] = $this->default[$key];
+                }
+            }
+
+            return $this->value($value);
         }
 
         return $this->value(!is_null($value) && $value != 'default' ? $value : $this->default);

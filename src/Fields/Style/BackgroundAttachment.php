@@ -4,7 +4,7 @@ namespace Sitepilot\Theme\Fields\Style;
 
 use Sitepilot\Theme\Fields\Select;
 
-class TextAlign extends Select
+class BackgroundAttachment extends Select
 {
     public function __construct(...$arguments)
     {
@@ -12,10 +12,9 @@ class TextAlign extends Select
 
         $this->options([
             'default' => '',
-            'left' => __('Left', 'sp-theme'),
-            'center' => __('Center', 'sp-theme'),
-            'right' => __('Right', 'sp-theme'),
-            'justify' => __('Justify', 'sp-theme')
+            'fixed' => __('Fixed', 'sp-theme'),
+            'local' => __('Local', 'sp-theme'),
+            'scroll' => __('Scroll', 'sp-theme')
         ]);
 
         $this->default_select('default');
@@ -24,10 +23,9 @@ class TextAlign extends Select
     protected function value($value)
     {
         $classes = [
-            'left' => 'text-left',
-            'center' => 'text-center',
-            'right' => 'text-right',
-            'justify' => 'text-justify'
+            'fixed' => 'bg-fixed',
+            'local' => 'bg-local',
+            'scroll' => 'bg-scroll',
         ];
 
         return $classes[$value] ?? $value;

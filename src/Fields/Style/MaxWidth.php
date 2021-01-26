@@ -11,7 +11,7 @@ class MaxWidth extends Select
         parent::__construct(...$arguments);
 
         $this->options([
-            'default' => __('Default', 'sp-theme'),
+            'default' => '',
             'container' => __('Container', 'sp-theme'),
             'xl' => __('Extra Large', 'sp-theme'),
             'lg' => __('Large', 'sp-theme'),
@@ -26,7 +26,7 @@ class MaxWidth extends Select
     protected function value($value)
     {
         $classes = [
-            'container' => 'ast-container',
+            'container' => 'container',
             'xl' => 'mx-auto max-w-xl',
             'lg' => 'mx-auto max-w-lg',
             'md' => 'mx-auto max-w-md',

@@ -33,7 +33,22 @@ class ContactForm7 extends Block
                     'btn-center' => __('Center', 'sp-theme'),
                     'btn-right' => __('Right', 'sp-theme'),
                     'btn-full-width' => __('Full Width', 'sp-theme')
+                ]),
+
+            $this->field_style_margin(__('Margin', 'sp-theme'), 'margin')
+                ->default_value([
+                    'bottom' => 'x'
                 ])
+        ];
+    }
+
+    protected function data($data, $post_id): array
+    {
+        return [
+            'classes' => $this->get_classes([
+                'field:margin',
+                'field:btn_alignment'
+            ]),
         ];
     }
 }

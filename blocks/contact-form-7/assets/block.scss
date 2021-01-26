@@ -7,10 +7,6 @@
         input[type="submit"] {
             @apply mx-auto block;
         }
-
-        .ajax-loader {
-            display: none !important;
-        }
     }
 
     .btn-left {
@@ -31,19 +27,11 @@
         }
     }
 
-    .wpcf7 form>div, .wpcf7 form>p {
-        @apply mb-2;
-    }
+    .ajax-loader {
+        display: none !important;
 
-    .wpcf7 input:not([type=submit]), .wpcf7 select, .wpcf7 textarea {
-        @apply p-2 border-black bg-white border-solid border;
-    }
-
-    .wpcf7 textarea {
-        max-height: 150px;
-    }
-
-    .wpcf7 form.invalid .wpcf7-response-output, .wpcf7 form.unaccepted .wpcf7-response-output {
-        @apply mx-0 my-4 border-primary;
+        &.is-active {
+            display: block !important;
+        }
     }
 }

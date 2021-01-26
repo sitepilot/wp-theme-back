@@ -61,7 +61,7 @@ class Model extends Module
 
     public function get_container_width()
     {
-        return apply_filters('sp_theme_container_width', null);
+        return apply_filters('sp_theme_container_width', 1100);
     }
 
     public function get_tablet_breakpoint()

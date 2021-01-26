@@ -2,6 +2,9 @@
 
 namespace Sitepilot\Theme;
 
+use Sitepilot\Theme\Fields\Field;
+use Sitepilot\Theme\Acf\Fields\Dimension;
+
 class Acf extends Module
 {
     /**
@@ -27,6 +30,7 @@ class Acf extends Module
         /* Actions */
         add_action('acf/init', [$this, 'action_register_blocks']);
         add_action('acf/init', [$this, 'action_register_options_page']);
+        add_action('acf/include_field_types', [$this, 'action_include_field_types']);
     }
 
     /**
@@ -104,9 +108,12 @@ class Acf extends Module
                 $fields[] = $field->get_config('acf');
 
                 foreach ($field->get_subfields() as $field) {
-                    $fields[] = $field->get_config('acf');
+                    if ($field instanceof Field) {
+                        $fields[] = $field->get_config('acf');
+                    }
                 }
             }
+
 
             if (function_exists('acf_register_block_type')) {
                 $align = array();
@@ -123,7 +130,8 @@ class Acf extends Module
                         'align' => count($align) ? $align : false,
                         'align_text' => $block->config->supports->text_align ?? false,
                         'jsx' => $block->config->supports->inner_blocks
-                    ]
+                    ],
+                    'align' => $block->config->defaults->width
                 ]);
             }
 
@@ -150,6 +158,23 @@ class Acf extends Module
                 }
                 return $blocks;
             }, 99, 1);
+        }
+    }
+
+    /**
+     * Register custom ACF field types.
+     *
+     * @param int $version
+     * @return void
+     */
+    public function action_include_field_types($version)
+    {
+        if ($version == 5) {
+            new Dimension([
+                'version'    => '1.0.0',
+                'url'        => plugin_dir_url(__FILE__),
+                'path'        => plugin_dir_path(__FILE__)
+            ]);
         }
     }
 }
